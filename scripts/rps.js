@@ -57,31 +57,61 @@ function game(rounds) {
         // process conditions from the game function
         switch(playRockPaperScissors(playerSelection, computerSelection)) {
             case -1:
-                console.log("Not a valid choice! Please input 'rock', 'paper' or 'scissors'.");
+                console.log(
+                    "Not a valid choice! Please input 'rock', 'paper' or 'scissors'."
+                    );
                 break;
             case 0:
-                console.log("It's a draw! You played " + capitalize(playerSelection) + ", Computer played " + capitalize(computerSelection));
+                console.log(
+                    "It's a draw! You played " + 
+                    capitalize(playerSelection) + 
+                    ", Computer played " + 
+                    capitalize(computerSelection)
+                    );
                 break;
             case 1:
                 playerPoints++
-                console.log("You win! " + capitalize(playerSelection) + " beats " + capitalize(computerSelection))
+                console.log(
+                    "You win! " + 
+                    capitalize(playerSelection) + 
+                    " beats " + 
+                    capitalize(computerSelection)
+                    );
                 break;
             case 2:
                 computerPoints++
-                console.log("You lose! " + capitalize(computerSelection) + " beats " + capitalize(playerSelection));
+                console.log(
+                    "You lose! " + 
+                    capitalize(computerSelection) + 
+                    " beats " + 
+                    capitalize(playerSelection)
+                    );
         }
         // output the round result and the scores as they stand
-        console.log("Current score: You: " + playerPoints + ", Computer: " + computerPoints)
+        console.log(
+            "Current score: You: " + playerPoints + 
+            ", Computer: " + computerPoints
+        );
     }
 
     // Now output the final result and final scores
-    if ( playerPoints > computerPoints ) { console.log("You win the game! Final score: You: " + playerPoints + ", Computer: " + computerPoints)}
-    else if ( playerPoints < computerPoints ) { console.log("You lose the game! Final score: You: " + playerPoints + ", Computer: " + computerPoints)}
-    else { console.log("It's a draw! Final score: You: " + playerPoints + ", Computer: " + computerPoints) } 
+    if ( playerPoints > computerPoints ) { 
+        console.log("You win the game! Final score: You: " + 
+        playerPoints + ", Computer: " + computerPoints)
+    }
+
+    else if ( playerPoints < computerPoints ) { 
+        console.log("You lose the game! Final score: You: " + 
+        playerPoints + ", Computer: " + computerPoints)
+    }
+
+    else { console.log("It's a draw! Final score: You: " + 
+        playerPoints + ", Computer: " + computerPoints) 
+    } 
 }
 
 
-game(3)
+game(5)
 
 
 
