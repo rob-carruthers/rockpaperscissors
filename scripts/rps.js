@@ -11,14 +11,36 @@ function getComputerChoice() {
     return rps[choice];
 };
 
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 function playRockPaperScissors(playerSelection, computerSelection) {
-    console.log("Player selection is: " + playerSelection);
-    console.log("Computer selection is: " + computerSelection)
+    // first check to see if the player has made a valid choice
+    if ( ! rps.includes(playerSelection)) {
+        return "Not a valid choice! Please input 'rock', 'paper' or 'scissors'."
+    }
+    // check if it's a draw
+    else if ( playerSelection === computerSelection) {
+        return "It's a draw! You played " + capitalize(playerSelection) + ", Computer played " + capitalize(computerSelection)
+    }
+    // check win conditions for player
+    else if ( 
+        ( playerSelection === 'rock' && computerSelection === 'scissors' ) ||
+        ( playerSelection === 'scissors' && computerSelection === 'paper' ) ||
+        ( playerSelection === 'paper' && computerSelection === 'rock' ) 
+    ) {
+        return "You win! " + capitalize(playerSelection) + " beats " + capitalize(computerSelection)
+    }
+    // if conditions not met, player has lost
+    else {
+        return "You lose! " + capitalize(computerSelection) + " beats " + capitalize(playerSelection)
+    }
 };
 
 let playerSelection = prompt("Rock, Paper or Scissors?").toLowerCase();
 let computerSelection = getComputerChoice();
 
-playRockPaperScissors(playerSelection, computerSelection)
+console.log(playRockPaperScissors(playerSelection, computerSelection))
 
 
