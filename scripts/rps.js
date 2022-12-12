@@ -1,29 +1,28 @@
 // rps.js - Rock, Paper, Scissors backend
 
 const rps = ["rock", "paper", "scissors"]
+let playerScore = 0;
+let computerScore = 0;
 
 // First, make the computer choice of Rock, Paper or Scissors.
 // For ease, this will be a random index of the array above.
-
-function getComputerChoice() { 
-    let choice = Math.floor(Math.random() * 3);
-    
-    return rps[choice];
-};
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-function playRockPaperScissors(playerSelection, computerSelection) {
-    // first check to see if the player has made a valid choice
-    if ( ! rps.includes(playerSelection)) {
-        return -1
-    }
+function playRockPaperScissors(playerSelection, resultDiv, scoreDiv) {
+    // Get the computer choice by generating a random
+    // number, floor() to an int and get the corresponding
+    // rps array index
+    const choice = Math.floor(Math.random() * 3);
+    const computerSelection = rps[choice];
 
-    // check if it's a draw
-    else if ( playerSelection === computerSelection) {
-        return 0
+    if ( playerScore < 5 && computerScore < 5) {
+    let resultsLog = "";
+    // check for a draw
+    if ( playerSelection === computerSelection ) {
+        resultsLog += "It's a draw! Both played " + playerSelection + "."
     }
 
     // check win conditions for player
@@ -32,86 +31,38 @@ function playRockPaperScissors(playerSelection, computerSelection) {
         ( playerSelection === 'scissors' && computerSelection === 'paper' ) ||
         ( playerSelection === 'paper' && computerSelection === 'rock' ) 
     ) {
-        return 1
+        resultsLog += "You win! " + capitalize(playerSelection) + " beats " + computerSelection + "."
+        playerScore += 1
     }
 
     // if conditions not met, player has lost
     else {
-        return 2
+        resultsLog += "You lose! " + capitalize(computerSelection) + " beats " + playerSelection + "."
+        computerScore += 1
     }
+
+    resultDiv.textContent = resultsLog
+    scoreDiv.textContent = "Your score: " + playerScore + ". Computer: " + computerScore
+    }
+
+    if (playerScore === 5 ) {
+        scoreDiv.textContent = "You win the game! Your score: " + playerScore + ". Computer: " + computerScore
+    }
+
+    else if (computerScore === 5 ) {
+        scoreDiv.textContent = "You lose the game! Your score: " + playerScore + ". Computer: " + computerScore
+    }
+
+
 };
 
-function game(rounds) {
-    console.log("Let's play " + rounds + " rounds of Rock, Paper, Scissors.")
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorsButton = document.querySelector('#scissors');
+const results = document.querySelector('#results');
+const score = document.querySelector('#score');
 
-    // set scores to 0
-    let playerPoints = 0;
-    let computerPoints = 0;
-
-    // set up a loop for the rounds of the game
-    for (n = 0; n < rounds; n++) {
-        // take player input and get the computer's choice
-        let playerSelection = prompt("Rock, Paper or Scissors?").toLowerCase();
-        let computerSelection = getComputerChoice();
-        
-        // process conditions from the game function
-        switch(playRockPaperScissors(playerSelection, computerSelection)) {
-            case -1:
-                console.log(
-                    "Not a valid choice! Please input 'rock', 'paper' or 'scissors'."
-                    );
-                break;
-            case 0:
-                console.log(
-                    "It's a draw! You played " + 
-                    capitalize(playerSelection) + 
-                    ", Computer played " + 
-                    capitalize(computerSelection)
-                    );
-                break;
-            case 1:
-                playerPoints++
-                console.log(
-                    "You win! " + 
-                    capitalize(playerSelection) + 
-                    " beats " + 
-                    capitalize(computerSelection)
-                    );
-                break;
-            case 2:
-                computerPoints++
-                console.log(
-                    "You lose! " + 
-                    capitalize(computerSelection) + 
-                    " beats " + 
-                    capitalize(playerSelection)
-                    );
-        }
-        // output the round result and the scores as they stand
-        console.log(
-            "Current score: You: " + playerPoints + 
-            ", Computer: " + computerPoints
-        );
-    }
-
-    // Now output the final result and final scores
-    if ( playerPoints > computerPoints ) { 
-        console.log("You win the game! Final score: You: " + 
-        playerPoints + ", Computer: " + computerPoints)
-    }
-
-    else if ( playerPoints < computerPoints ) { 
-        console.log("You lose the game! Final score: You: " + 
-        playerPoints + ", Computer: " + computerPoints)
-    }
-
-    else { console.log("It's a draw! Final score: You: " + 
-        playerPoints + ", Computer: " + computerPoints) 
-    } 
-}
-
-
-game(5)
-
-
+rockButton.addEventListener('click', () => playRockPaperScissors("rock", results, score));
+paperButton.addEventListener('click', () => playRockPaperScissors("paper", results, score));
+scissorsButton.addEventListener('click', () => playRockPaperScissors("scissors", results, score));
 
